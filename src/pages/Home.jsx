@@ -13,19 +13,23 @@ function Home() {
 
     useEffect(() => {
         fetch(`${base_api_url}books/popular?per_page=4`).then(res => res.json()).then(data => {
-            setPopularBooks(data.items)
+            if (data?.items)
+                setPopularBooks(data.items)
         }).catch(err => console.log(err))
 
         fetch(`${base_api_url}agents/popular?per_page=4`).then(res => res.json()).then(data => {
-            setAuthors(data.items)
+            if (data?.items)
+                setAuthors(data.items)
         }).catch(err => console.log(err))
 
         fetch(`${base_api_url}bookshelves?per_page=10`).then(res => res.json()).then(data => {
-            setBookshelves(data.items)
+            if (data?.items)
+                setBookshelves(data.items)
         }).catch(err => console.log(err))
 
         fetch(`${base_api_url}subjects?per_page=10`).then(res => res.json()).then(data => {
-            setSubjects(data.items)
+            if (data?.items)
+                setSubjects(data.items)
         }).catch(err => console.log(err))
     }, [base_api_url])
 
