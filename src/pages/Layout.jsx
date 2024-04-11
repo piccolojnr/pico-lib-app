@@ -29,6 +29,7 @@ function Layout({ children }) {
         if (currentMenuItem) {
             setCurrentpath(currentMenuItem.name.toLowerCase());
         }
+        // eslint-disable-next-line
     }, [navigate])
 
     return (
@@ -58,7 +59,7 @@ function Layout({ children }) {
                                     {
                                         menu.map((item, index) => (
                                             currentPath === item.name.toLowerCase() ?
-                                                <Link to={item.path} className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="" key={index}>{item.name}</Link> :
+                                                <Link to={item.path} className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page" key={index}>{item.name}</Link> :
                                                 <Link to={item.path} className="dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white rounded-md px-3 py-2 text-sm font-medium" key={index}>{item.name}</Link>))
                                     }
                                 </div>

@@ -7,7 +7,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [authToken, setAuthToken] = useState(null);
-    const base_api_url = 'http://127.0.0.1:8000/api/v1/';
+    const base_api_url = process.env.REACT_APP_BASE_API_URL;
     const navigate = useNavigate();
 
 

@@ -14,6 +14,7 @@ function Login() {
         setAuthToken(null)
         setUser(null)
         localStorage.removeItem('authToken');
+        // eslint-disable-next-line
     }, [navigate])
 
     const login = (e) => {

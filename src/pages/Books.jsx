@@ -20,11 +20,11 @@ function Books() {
     })
     const navigate = useNavigate();
 
-    const handlePageChange = (page) => {
-        const params = new URLSearchParams(window.location.search);
-        params.set('page', page);
-        navigate(`?${params.toString()}`);
-    }
+    // const handlePageChange = (page) => {
+    //     const params = new URLSearchParams(window.location.search);
+    //     params.set('page', page);
+    //     navigate(`?${params.toString()}`);
+    // }
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -54,10 +54,10 @@ function Books() {
                 setBreadcrumbs(crumbs)
 
                 setPagination(data);
-            }).
-            catch(error => {
+            }).catch(error => {
                 console.error(error);
             })
+        // eslint-disable-next-line
     }, [navigate])
 
     return (
