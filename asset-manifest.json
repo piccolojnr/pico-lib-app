@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/pico-lib-app/static/css/main.9f870cc6.css",
+    "main.js": "/pico-lib-app/static/js/main.233f4ec9.js",
+    "static/media/qualy-bold.ttf": "/pico-lib-app/static/media/qualy-bold.c340b4215b7eb4bbb06f.ttf",
+    "index.html": "/pico-lib-app/index.html",
+    "main.9f870cc6.css.map": "/pico-lib-app/static/css/main.9f870cc6.css.map",
+    "main.233f4ec9.js.map": "/pico-lib-app/static/js/main.233f4ec9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9f870cc6.css",
+    "static/js/main.233f4ec9.js"
+  ]
+}
