@@ -3,17 +3,18 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
-import BookCard from '../components/BookCard';
-import BookCardSkeleton from '../components/BookCardSkeleton';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
+import AuthorCard from "../components/AuthorCard"
+import AuthorCardSkeleton from "../components/AuthorCardSkeleton"
 
-function Books() {
+
+function Agents() {
     const { base_api_url } = useContext(AuthContext)
     const [breadcrumbs, setBreadcrumbs] = useState([
         { name: 'Home', url: '/' },
-        { name: 'Books', url: '/books' },
+        { name: 'Agents', url: '/agents' },
     ])
     const [pagination, setPagination] = useState({
         items: [],
@@ -52,7 +53,7 @@ function Books() {
             const agent = params.get('agent');
             const page = params.get('page') || 1;
             const base_url = new URL(base_api_url);
-            const api_url = new URL("books", base_url);
+            const api_url = new URL("agents", base_url);
             if (subject) {
                 api_url.searchParams.set('subject', subject);
             }
@@ -71,7 +72,7 @@ function Books() {
                 .then(data => {
                     const crumbs = [
                         { name: 'Home', url: '/' },
-                        { name: 'Books', url: '/books' },
+                        { name: 'Agents', url: '/agents' },
                     ]
                     if (subject) {
                         crumbs.push({ name: "subject: " + subject, url: `/books?subject=${subject}` });
@@ -101,22 +102,22 @@ function Books() {
     return (
         <>
             <Helmet>
-                <title>Books | pico-library</title>
+                <title>Agents | pico-library</title>
             </Helmet>
             <div className="p-5 bg-gray-200">
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-                <SearchBar handleSearch={handleSearch} placeholder="Search Books" />
+                <SearchBar handleSearch={handleSearch} placeholder="Search Agents" />
 
                 <div className='flex items-center flex-col justify-center mt-8'>
                     <div className="grid grid-cols-1 sm:grid-cols-2 min-[800px]:grid-cols-3 min-[1080px]:grid-cols-4  gap-4 w-fit">
                         {
                             loading ?
                                 Array.from({ length: 10 }).map((_, index) => (
-                                    <BookCardSkeleton key={index} />
+                                    <AuthorCardSkeleton key={index} />
                                 )) :
-                                pagination.items.map((book, index) => (
-                                    <BookCard book={book} key={index} />
+                                pagination.items.map((author, index) => (
+                                    <AuthorCard author={author} key={index} />
                                 ))}
                     </div>
                 </div>
@@ -134,4 +135,4 @@ function Books() {
     )
 }
 
-export default Books
+export default Agents

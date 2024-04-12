@@ -7,7 +7,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [authToken, setAuthToken] = useState(null);
-    const base_api_url = "https://pico-lib-api.onrender.com/api/v1/";
+    const base_api_url = "http://localhost:8081/api/v1/";
     const navigate = useNavigate();
 
 
@@ -82,7 +82,10 @@ const AuthProvider = ({ children }) => {
         }
     }
     return (
-        <AuthContext.Provider value={{ user, authToken, setAuthToken, setUser, refreshToken, base_api_url }}>
+        <AuthContext.Provider value={{
+            isAuthenticated: !!user && !!authToken
+            , user, authToken, setAuthToken, setUser, refreshToken, base_api_url
+        }}>
             {children}
         </AuthContext.Provider>
     );
