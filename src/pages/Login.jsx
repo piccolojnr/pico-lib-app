@@ -3,9 +3,10 @@ import { AuthContext } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import { login_user } from '../api/tools';
 
 function Login() {
-    const { setAuthToken, setUser, base_api_url } = useContext(AuthContext)
+    const { setAuthToken, setUser } = useContext(AuthContext)
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -17,34 +18,18 @@ function Login() {
         // eslint-disable-next-line
     }, [navigate])
 
-    const login = (e) => {
-        e.preventDefault();
-        setError(null);
-        setLoading(true);
-        const { email, password } = e.target.elements;
-        const user = { email: email.value, password: password.value };
-        const params = new URLSearchParams(user).toString();
+    const login = async (e) => {
+        try {
 
-        fetch(base_api_url + "auth/login", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: params
-        })
-            .then(async res => {
-                if (!res.ok) {
-                    const error = await res.json();
-                    throw new Error(error.message);
-                }
-
-                return res.json();
-            })
-            .then(data => {
-                setAuthToken(data.auth);
-                localStorage.setItem('authToken', JSON.stringify(data.auth));
-                const decoded = jwtDecode(data.auth.auth_token);
+            e.preventDefault();
+            setError(null);
+            setLoading(true);
+            const { email, password } = e.target.elements;
+            const response = await login_user(email.value, password.value);
+            if (response.status === 200) {
+                setAuthToken(response.data.auth);
+                localStorage.setItem('authToken', JSON.stringify(response.data.auth));
+                const decoded = jwtDecode(response.data.auth.auth_token);
                 const user = {
                     id: decoded.sub.public_id,
                     email: decoded.sub.email,
@@ -55,19 +40,18 @@ function Login() {
                     navigate('/admin');
                 }
                 else {
-                    navigate('/');
+                    navigate('/profile');
                 }
+            }
+            else {
+                setError(response.error.message);
+            }
 
-            })
-            .catch((err) => {
-                console.error('Error:', err);
-                setError(err);
-                setAuthToken(null);
-                setUser(null);
-                localStorage.removeItem('authToken');
-            }).finally(() => {
-                setLoading(false);
-            })
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
 

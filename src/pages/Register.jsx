@@ -62,7 +62,7 @@ function Register() {
                     navigate('/admin');
                 }
                 else {
-                    navigate('/');
+                    navigate('/register');
                 }
 
             })

@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../components/Breadcrumbs';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { useContext } from 'react';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
 import AuthorCard from "../components/AuthorCard"
 import AuthorCardSkeleton from "../components/AuthorCardSkeleton"
+import { get_items } from '../api/tools';
 
 
 function Agents() {
-    const { base_api_url } = useContext(AuthContext)
     const [breadcrumbs, setBreadcrumbs] = useState([
         { name: 'Home', url: '/' },
         { name: 'Agents', url: '/agents' },
@@ -44,58 +42,37 @@ function Agents() {
     }
 
     useEffect(() => {
-        const fetchBooks = () => {
-            setLoading(true);
-            const params = new URLSearchParams(window.location.search);
-            const query = params.get('query');
-            const subject = params.get('subject');
-            const bookshelf = params.get('bookshelf');
-            const agent = params.get('agent');
-            const page = params.get('page') || 1;
-            const base_url = new URL(base_api_url);
-            const api_url = new URL("agents", base_url);
-            if (subject) {
-                api_url.searchParams.set('subject', subject);
-            }
-            if (bookshelf) {
-                api_url.searchParams.set('bookshelf', bookshelf);
-            }
-            if (agent) {
-                api_url.searchParams.set('agent', agent);
-            }
-            if (query) {
-                api_url.searchParams.set('q', query);
-            }
-            api_url.searchParams.set('page', page);
-            fetch(api_url.toString())
-                .then(response => response.json())
-                .then(data => {
-                    const crumbs = [
-                        { name: 'Home', url: '/' },
-                        { name: 'Agents', url: '/agents' },
-                    ]
-                    if (subject) {
-                        crumbs.push({ name: "subject: " + subject, url: `/books?subject=${subject}` });
+        const fetchAgents = async () => {
+            try {
+                setLoading(true);
+                const response = await get_items("agents")
+                if (response.status !== 200) {
+                    throw new Error(response.error);
+                }
+                setBreadcrumbs([
+                    { name: 'Home', url: '/' },
+                    { name: 'Agents', url: '/agents' },
+                ])
+                response.params.entries().forEach(async (v) => {
+                    if (v && v[0] !== "page") {
+                        let name = v[1]
+                        setBreadcrumbs(prevBreadcrumbs => [
+                            ...prevBreadcrumbs,
+                            {
+                                name: v[0] + ": " + name,
+                                url: `/books?${v[0]}=${v[1]}`
+                            }
+                        ])
                     }
-                    if (bookshelf) {
-                        crumbs.push({ name: "bookshelf: " + bookshelf, url: `/books?bookshelf=${bookshelf}` });
-                    }
-                    if (agent) {
-                        crumbs.push({ name: "agent: " + agent, url: `/books?agent=${agent}` });
-                    }
-                    if (query) {
-                        crumbs.push({ name: "query: " + query, url: '' });
-                    }
-                    setBreadcrumbs(crumbs)
-                    setPagination(data);
-                }).catch(error => {
-                    console.error(error);
                 })
-                .finally(() => {
-                    setLoading(false);
-                })
+                setPagination(response.pagination)
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
         }
-        fetchBooks();
+        fetchAgents();
         // eslint-disable-next-line
     }, [navigate])
 

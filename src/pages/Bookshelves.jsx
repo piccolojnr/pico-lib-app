@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../components/Breadcrumbs';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { useContext } from 'react';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
+import { get_items } from '../api/tools';
 
 function Bookshelves() {
-    const { base_api_url } = useContext(AuthContext)
     const [breadcrumbs, setBreadcrumbs] = useState([
         { name: 'Home', url: '/' },
         { name: 'Bookshelves', url: '/bookshelves' },
@@ -40,37 +38,37 @@ function Bookshelves() {
 
 
     useEffect(() => {
-        const fetchBooks = () => {
-            setLoading(true);
-            const params = new URLSearchParams(window.location.search);
-            const query = params.get('query');
-            const page = params.get('page') || 1;
-            const base_url = new URL(base_api_url);
-            const api_url = new URL("bookshelves", base_url);
-            if (query) {
-                api_url.searchParams.set('q', query);
-            }
-            api_url.searchParams.set('page', page);
-            fetch(api_url.toString())
-                .then(response => response.json())
-                .then(data => {
-                    const crumbs = [
-                        { name: 'Home', url: '/' },
-                        { name: 'Bookshelves', url: '/bookshelves' },
-                    ]
-                    if (query) {
-                        crumbs.push({ name: "query: " + query, url: '' });
+        const fetchBookshelves = async () => {
+            try {
+                setLoading(true);
+                const response = await get_items("bookshelves")
+                if (response.status !== 200) {
+                    throw new Error(response.error);
+                }
+                setBreadcrumbs([
+                    { name: 'Home', url: '/' },
+                    { name: 'Bookshelves', url: '/bookshelves' },
+                ])
+                response.params.entries().forEach(async (v) => {
+                    if (v && v[0] !== "page") {
+                        let name = v[1]
+                        setBreadcrumbs(prevBreadcrumbs => [
+                            ...prevBreadcrumbs,
+                            {
+                                name: v[0] + ": " + name,
+                                url: `/books?${v[0]}=${v[1]}`
+                            }
+                        ])
                     }
-                    setBreadcrumbs(crumbs)
-                    setPagination(data);
-                }).catch(error => {
-                    console.error(error);
                 })
-                .finally(() => {
-                    setLoading(false);
-                })
+                setPagination(response.pagination)
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
         }
-        fetchBooks();
+        fetchBookshelves();
         // eslint-disable-next-line
     }, [navigate])
 

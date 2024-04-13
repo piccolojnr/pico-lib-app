@@ -1,6 +1,7 @@
 import { React, createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { refreshToken } from '../api/tools';
 
 const AuthContext = createContext();
 
@@ -33,58 +34,62 @@ const AuthProvider = ({ children }) => {
         // eslint-disable-next-line
     }, [])
 
-    // refresh token
-    const refreshToken = () => {
+    const isAuthenticated = () => {
         const token = localStorage.getItem("authToken");
         if (token) {
             const authToken = JSON.parse(token);
-            const refresh_token = authToken.refresh_token;
-
-            fetch(base_api_url + "auth/login", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    "Authorization": "Bearer " + refresh_token
-
-                },
-            }).then(async res => {
-                if (!res.ok) {
-                    const error = await res.json();
-                    throw new Error(error.message);
-                }
-
-                return res.json();
-            })
-                .then(data => {
-                    setAuthToken(data.auth);
-                    localStorage.setItem('authToken', JSON.stringify(data.auth));
-                    const decoded = jwtDecode(data.auth.auth_token);
-                    const user = {
-                        id: decoded.sub.public_id,
-                        email: decoded.sub.email,
-                        is_admin: decoded.scope.is_admin
-                    }
-                    setUser(user);
-                })
-                .catch((err) => {
-                    console.error('Error:', err);
-                    setAuthToken(null);
-                    setUser(null);
-                    localStorage.removeItem('authToken');
-                    navigate('/login');
-                })
+            setAuthToken(authToken);
+            const decoded = jwtDecode(authToken.auth_token);
+            if (!decoded) {
+                setAuthToken(null);
+                setUser(null);
+                return false;
+            }
+            const user = {
+                id: decoded.sub.public_id,
+                email: decoded.sub.email,
+                is_admin: decoded.scope.is_admin
+            }
+            setUser(user);
+            return true;
         }
         else {
             setAuthToken(null);
             setUser(null);
-            navigate('/login');
+            return false;
         }
     }
+    const refreshAuthToken = async (refresh_token) => {
+        const response = await refreshToken(refresh_token);
+        if (response.status === 200) {
+            addRefreshedToken(response.data.auth);
+            return response.data;
+        } else {
+            navigate('/login');
+            throw new Error('Failed to refresh token');
+        }
+    };
+    const addRefreshedToken = (auth) => {
+        setAuthToken(auth);
+        const decoded = jwtDecode(auth.auth_token);
+        if (!decoded) {
+            setAuthToken(null);
+            setUser(null);
+            return false;
+        }
+        const user = {
+            id: decoded.sub.public_id,
+            email: decoded.sub.email,
+            is_admin: decoded.scope.is_admin
+        }
+        setUser(user);
+    }
+
+
+
     return (
         <AuthContext.Provider value={{
-            isAuthenticated: !!user && !!authToken
-            , user, authToken, setAuthToken, setUser, refreshToken, base_api_url
+            isAuthenticated, user, authToken, setAuthToken, setUser, addRefreshedToken, refreshAuthToken, base_api_url,
         }}>
             {children}
         </AuthContext.Provider>

@@ -11,6 +11,8 @@ import Bookshelves from './pages/Bookshelves';
 import Page404 from './pages/Page404';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
+import ConfirmEmail from './pages/ConfirmEmail';
+import ChangePassword from './pages/ChangePassword';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
               <Route path="/profile" element={
                 <ProtectedRoute component={Profile} />
               } />
+              <Route path="/confirm-email" element={<ConfirmEmail />} />
+              <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/books" element={<Books />} />
               <Route path="/subjects" element={<Subjects />} />
               <Route path="/agents" element={<Agents />} />

@@ -63,7 +63,7 @@ function Home() {
                     <div className='flex items-center flex-col justify-center'>
                         <h1 className='font-bold text-3xl text-slate-600 mb-8'>Popular Books</h1>
                         <div className="grid grid-cols-1 sm:grid-cols-2 min-[800px]:grid-cols-3 min-[1080px]:grid-cols-4  gap-4 w-fit">
-                            {loading ?
+                            {loading || popularBooks.length === 0 ?
 
                                 Array
                                     .from({ length: 4 })
@@ -81,7 +81,7 @@ function Home() {
                         <h1 className='font-bold text-3xl text-slate-600 mb-8'>Meet Renowned Authors</h1>
                         <div className="grid grid-cols-1 sm:grid-cols-2 min-[800px]:grid-cols-3 min-[1080px]:grid-cols-4  gap-4 w-fit">
                             {
-                                loading ?
+                                loading || authors.length === 0 ?
                                     Array.from({ length: 4 })
                                         .map((_, index) => <AuthorCardSkeleton key={index} />)
                                     :
@@ -98,7 +98,7 @@ function Home() {
                         <h1 className='font-bold text-3xl text-slate-600 mb-8'>Discover Unique Bookshelves</h1>
                         <div className='flex items-center justify-center flex-wrap gap-4'>
                             {
-                                loading ?
+                                loading || bookshelves.length === 0 ?
                                     Array.from({ length: 10 })
                                         .map((_, index) => (
                                             <div key={index} className={`w-${random_choice([28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 96])} h-16 overflow-hidden flex flex-col items-start justify-center gap-2 p-4  border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 animate-pulse`}>
@@ -121,7 +121,7 @@ function Home() {
                         <h1 className='font-bold text-3xl text-slate-600 mb-8'>Explore Subjects</h1>
                         <div className='flex items-center justify-center flex-wrap gap-4'>
                             {
-                                loading ?
+                                loading || subjects.length === 0 ?
                                     Array.from({ length: 10 })
                                         .map((_, index) => (
                                             <div key={index} className={`w-${random_choice([28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 96])} h-16 overflow-hidden flex flex-col items-start justify-center gap-2 p-4  border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 animate-pulse`}>
