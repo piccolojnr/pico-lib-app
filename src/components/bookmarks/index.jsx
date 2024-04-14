@@ -11,6 +11,7 @@ function BookmarkedBooks() {
 
     useEffect(() => {
         fetchBooks(filter);
+        // eslint-disable-next-line
     }, []);
 
     const fetchBooks = async (status = null) => {

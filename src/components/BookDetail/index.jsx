@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CollapsibleSection from './CollapsibleSection';
-import { formatDistanceToNow, set } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { AuthContext } from '../../context/AuthContext';
 import { get_user_bookmark_books, create_bookmark, delete_bookmark } from '../../utils/api';
 
