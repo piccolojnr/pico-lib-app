@@ -8,11 +8,13 @@ import Books from './pages/Books';
 import Subjects from './pages/Subjects';
 import Agents from './pages/Agents';
 import Bookshelves from './pages/Bookshelves';
-import Page404 from './pages/Page404';
+import Page404 from './pages/sub_pages/Page404';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
-import ConfirmEmail from './pages/ConfirmEmail';
-import ChangePassword from './pages/ChangePassword';
+import ConfirmEmail from './pages/sub_pages/ConfirmEmail';
+import ChangePassword from './pages/sub_pages/ChangePassword';
+import ForgotPassword from './pages/sub_pages/ForgotPassword';
+import Book from './pages/Book';
 
 function App() {
   return (
@@ -29,10 +31,12 @@ function App() {
               } />
               <Route path="/confirm-email" element={<ConfirmEmail />} />
               <Route path="/change-password" element={<ChangePassword />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/books" element={<Books />} />
               <Route path="/subjects" element={<Subjects />} />
               <Route path="/agents" element={<Agents />} />
               <Route path="/bookshelves" element={<Bookshelves />} />
+              <Route path="/books/:id" element={<Book />} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </Layout>

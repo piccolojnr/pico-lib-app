@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import { login_user } from '../api/tools';
+import { login_user } from '../api/auth';
 
 function Login() {
     const { setAuthToken, setUser } = useContext(AuthContext)
@@ -56,6 +56,7 @@ function Login() {
 
 
 
+
     return (
         <div className=" ">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
@@ -85,7 +86,7 @@ function Login() {
                                         <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                                     </div>
                                 </div>
-                                <Link to="" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</Link>
+                                <Link to="/forgot-password" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</Link>
                             </div>
                             <button type="submit" disabled={loading}
                                 style={{ backgroundColor: loading ? "#ccc" : "#0ea5e9" }}

@@ -6,7 +6,7 @@ import BookCardSkeleton from '../components/BookCardSkeleton';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
-import { get_items, get_item } from '../api/tools';
+import { get_items, get_item } from '../api/api';
 
 function Books() {
     const [breadcrumbs, setBreadcrumbs] = useState([
@@ -116,7 +116,7 @@ function Books() {
                     </div>
                 </div>
 
-                <div className='mt-8 flex items-center justify-center'>
+                <div className='mt-8 flex items-center justify-center '>
                     {
                         loading ?
                             <Pagination page={0} total_items={0} has_next={false} has_prev={false} />

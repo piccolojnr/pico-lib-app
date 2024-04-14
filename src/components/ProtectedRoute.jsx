@@ -16,6 +16,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
             setLoading(false);
         }
         getAuthentication();
+        // eslint-disable-next-line 
     }, [authenticated])
 
     return (
