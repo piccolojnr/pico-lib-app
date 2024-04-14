@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { get_comments } from '../../api/comment'
+import { get_comments } from '../../auth/comment'
 import { useState } from 'react'
 import Comment from './Comment'
 import { AuthContext } from '../../context/AuthContext'

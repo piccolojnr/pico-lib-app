@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { create_comment } from '../../api/comment';
+import { create_comment } from '../../auth/comment';
 import SelectRating from '../SelectRating';
 
 function WriteReview({ onSubmit, id }) {

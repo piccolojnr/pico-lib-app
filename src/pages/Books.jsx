@@ -6,7 +6,7 @@ import BookCardSkeleton from '../components/BookCardSkeleton';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
-import { get_items, get_item } from '../api/api';
+import { get_items, get_item } from '../auth/api';
 
 function Books() {
     const [breadcrumbs, setBreadcrumbs] = useState([
@@ -85,7 +85,7 @@ function Books() {
                 setPagination(response.pagination)
             } catch (error) {
                 console.log(error);
-            }finally {
+            } finally {
                 setLoading(false);
             }
         }

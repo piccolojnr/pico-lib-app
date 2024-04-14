@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
 import AuthorCard from "../components/AuthorCard"
 import AuthorCardSkeleton from "../components/AuthorCardSkeleton"
-import { get_items } from '../api/api';
+import { get_items } from '../auth/api';
 
 
 function Agents() {

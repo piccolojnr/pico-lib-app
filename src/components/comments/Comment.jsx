@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { AuthContext } from '../../context/AuthContext';
-import { delete_comment, vote_comment } from '../../api/comment';
+import { delete_comment, vote_comment } from '../../auth/comment';
 import Comments from '.';
 
 function Comment({ comment, handledeleteComment, handleUpdateComment }) {

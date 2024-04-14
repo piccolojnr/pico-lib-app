@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
-import { get_items } from '../api/api';
+import { get_items } from '../auth/api';
 
 function Subjects() {
     const [breadcrumbs, setBreadcrumbs] = useState([
@@ -64,7 +64,7 @@ function Subjects() {
                 setPagination(response.pagination)
             } catch (error) {
                 console.log(error);
-            }finally {
+            } finally {
                 setLoading(false);
             }
         }

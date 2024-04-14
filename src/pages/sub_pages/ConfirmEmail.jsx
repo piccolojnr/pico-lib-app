@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { confirm_email } from '../../api/auth'; // Import the API function for confirming email
+import { confirm_email } from '../../auth/auth'; // Import the API function for confirming email
 import { useNavigate } from 'react-router-dom';
 
 function ConfirmEmail() {

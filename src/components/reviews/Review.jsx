@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { formatDistanceToNow } from 'date-fns';
-import { delete_comment, vote_comment } from '../../api/comment';
+import { delete_comment, vote_comment } from '../../auth/comment';
 
 function Review({ review, handleUpdateReview, handledeleteReview }) {
     const { user, authToken, refreshAuthToken } = useContext(AuthContext)

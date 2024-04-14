@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { get_item_by_id } from '../api/api'
+import { get_item_by_id } from '../auth/api'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import BookDetail from '../components/BookDetail'

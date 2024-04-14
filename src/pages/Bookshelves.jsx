@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
-import { get_items } from '../api/api';
+import { get_items } from '../auth/api';
 
 function Bookshelves() {
     const [breadcrumbs, setBreadcrumbs] = useState([
