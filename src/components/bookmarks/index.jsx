@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { get_bookmarked_books } from '../../api/api';
+import { get_bookmarked_books } from '../../utils/api';
 import BookmarkBook from './BookmarkBook';
 
 function BookmarkedBooks() {

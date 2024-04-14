@@ -1,4 +1,4 @@
-const base_api_url = "http://localhost:8081/api/v1/";
+import { base_api_url } from "./constants";
 const endpoints_match = {
     "agent": "agents",
     "subject": "subjects",

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { create_bookmark, delete_bookmark } from '../../api/api';
+import { create_bookmark, delete_bookmark } from '../../utils/api';
 import { AuthContext } from '../../context/AuthContext';
 
 function BookmarkBook({ book, updateBookMark, deleteBook }) {

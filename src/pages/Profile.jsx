@@ -1,6 +1,6 @@
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { get_profile, resend_confirmation_email, update_profile } from "../api/auth";
+import { get_profile, resend_confirmation_email, update_profile } from "../utils/auth";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import BookmarkedBooks from "../components/bookmarks";

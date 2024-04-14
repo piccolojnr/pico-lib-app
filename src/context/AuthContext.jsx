@@ -1,14 +1,14 @@
 import { React, createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { refreshToken } from '../api/auth';
+import { refreshToken } from '../utils/auth';
+import { base_api_url } from "./constants";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [authToken, setAuthToken] = useState(null);
-    const base_api_url = "http://localhost:8081/api/v1/";
     const navigate = useNavigate();
 
 

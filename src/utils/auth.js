@@ -1,5 +1,5 @@
 
-const base_api_url = "http://localhost:8081/api/v1/";
+import { base_api_url } from "./constants";
 const get_profile = async (auth_token) => {
     try {
         const response = await fetch(base_api_url + "user/profile", {

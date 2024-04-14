@@ -1,4 +1,4 @@
-const base_api_url = "http://localhost:8081/api/v1/";
+import { base_api_url } from "./constants";
 const get_comments_by_book_id = async (book_id, type, page = 1) => {
     try {
         const url = new URL(base_api_url + "comments");
