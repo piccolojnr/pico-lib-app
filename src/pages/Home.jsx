@@ -6,6 +6,7 @@ import { AuthContext } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 import BookCardSkeleton from '../components/BookCardSkeleton'
 import AuthorCardSkeleton from '../components/AuthorCardSkeleton'
+import About from '../components/About'
 
 function Home() {
     const { base_api_url } = useContext(AuthContext);
@@ -62,6 +63,7 @@ function Home() {
     return (
         <div className=''>
             <Jumbotron />
+            <About />
             {/* recent books */}
             <div className='mt-8 p-4 bg-gray-300'>
                 <div className='mt-8 p-4 '>

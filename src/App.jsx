@@ -16,6 +16,7 @@ import ChangePassword from './pages/sub_pages/ChangePassword';
 import ForgotPassword from './pages/sub_pages/ForgotPassword';
 import Book from './pages/Book';
 import Agent from './pages/Agent';
+import About from './components/About';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
               <Route path="/agents/:id" element={<Agent />} />
               <Route path="/bookshelves" element={<Bookshelves />} />
               <Route path="/books/:id" element={<Book />} />
+              <Route path="/about" element={<About />} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </Layout>
