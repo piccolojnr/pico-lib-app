@@ -9,6 +9,7 @@ import AuthorCardSkeleton from '../components/AuthorCardSkeleton'
 
 function Home() {
     const { base_api_url } = useContext(AuthContext);
+    const [recentBooks, setRecentBooks] = useState([]);
     const [popularBooks, setPopularBooks] = useState([]);
     const [authors, setAuthors] = useState([]);
     const [subjects, setSubjects] = useState([]);
@@ -22,20 +23,24 @@ function Home() {
                 const api_url = new URL(base_api_url);
                 const fetchItems = async (endpoint, params = { per_page: 10 }) => {
                     const url = new URL(endpoint, api_url);
-                    url.searchParams.set('per_page', params.per_page);
+                    for (const [key, value] of Object.entries(params)) {
+                        url.searchParams.append(key, value);
+                    }
                     const response = await fetch(url.toString());
                     const data = await response.json();
                     return data.items || [];
                 };
 
-                const [books, authors, shelves, subjects] = await Promise.all([
-                    fetchItems('books/popular', { per_page: 4 }),
+                const [recent, popular, authors, shelves, subjects] = await Promise.all([
+                    fetchItems('books/', { per_page: 4, sort: 'created_at', order: 'desc' }),
+                    fetchItems('books/', { per_page: 4, sort: 'popularity', order: 'desc' }),
                     fetchItems('agents/popular', { per_page: 4 }),
                     fetchItems('bookshelves/', { per_page: 10 }),
                     fetchItems('subjects/', { per_page: 10 }),
                 ]);
 
-                setPopularBooks(books);
+                setRecentBooks(recent);
+                setPopularBooks(popular);
                 setAuthors(authors);
                 setBookshelves(shelves);
                 setSubjects(subjects);
@@ -57,6 +62,25 @@ function Home() {
     return (
         <div className=''>
             <Jumbotron />
+            {/* recent books */}
+            <div className='mt-8 p-4 bg-gray-300'>
+                <div className='mt-8 p-4 '>
+                    <div className='flex items-center flex-col justify-center'>
+                        <h1 className='font-bold text-3xl text-slate-600 mb-8'>Recent Books</h1>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 min-[800px]:grid-cols-3 min-[1080px]:grid-cols-4  gap-4 w-fit">
+                            {loading || recentBooks.length === 0 ?
+
+                                Array
+                                    .from({ length: 4 })
+                                    .map((_, index) => <BookCardSkeleton key={index} />)
+                                :
+                                recentBooks.map(book =>
+                                    <BookCard key={book.id} book={book} />)
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
             {/* popular books */}
             <div className='mt-8 p-4 bg-gray-300'>
                 <div className='mt-8 p-4 '>

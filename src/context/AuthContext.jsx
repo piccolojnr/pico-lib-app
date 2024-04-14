@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
                 is_admin: decoded.scope.is_admin
             }
             setUser(user);
+            refreshAuthToken(authToken.refresh_token)
         }
         else {
             setAuthToken(null);
