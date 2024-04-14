@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { send_forgot_password_email } from '../../auth/auth'; // Import the API function for confirming email
+import { send_forgot_password_email } from '../../utils/auth'; // Import the API function for confirming email
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');

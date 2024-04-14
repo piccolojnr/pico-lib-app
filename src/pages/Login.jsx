@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import { login_user } from '../auth/auth';
+import { login_user } from '../util/auth';
 
 function Login() {
     const { setAuthToken, setUser } = useContext(AuthContext)

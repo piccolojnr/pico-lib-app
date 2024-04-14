@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Review from './Review';
-import { get_comments } from '../../auth/comment';
+import { get_comments } from '../../utils/comment';
 import WriteReview from './WriteReview';
 import { AuthContext } from '../../context/AuthContext';
 

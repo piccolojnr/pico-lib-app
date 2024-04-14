@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { change_password, change_password_with_token } from '../../auth/auth';
+import { change_password, change_password_with_token } from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { useContext } from 'react';

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { create_comment } from '../../auth/comment';
+import { create_comment } from '../../utils/comment';
 import { AuthContext } from '../../context/AuthContext';
 
 function WriteComment({ onSubmit, type, id }) {

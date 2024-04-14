@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { get_comments, create_comment } from '../../auth/comment'
+import { get_comments, create_comment } from '../../utils/comment'
 import { useState } from 'react'
 import Comment from './Comment'
 import CommentSkeleton from './CommentSkeleton'
