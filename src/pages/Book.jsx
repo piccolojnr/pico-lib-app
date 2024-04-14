@@ -21,10 +21,10 @@ function Book() {
             try {
                 const response = await get_item_by_id("books", id)
                 if (response.status === 200)
-                    setBook(response.item)
+                    setBook(response.item.item)
                 else {
                     setBook(null)
-                    console.log(response.error)
+                    console.log(response)
                 }
 
             } catch (error) {
@@ -42,7 +42,7 @@ function Book() {
             <>
                 <Helmet>
                     <title>
-                        {book.title}
+                        {book.title} | Pico-Library
                     </title>
                 </Helmet>
                 <div>

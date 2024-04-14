@@ -41,7 +41,7 @@ function Bookshelves() {
         const fetchBookshelves = async () => {
             try {
                 setLoading(true);
-                const response = await get_items("bookshelves")
+                const response = await get_items("bookshelves/")
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }

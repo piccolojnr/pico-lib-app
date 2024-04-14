@@ -9,11 +9,9 @@ const get_items = async (endpoint) => {
     try {
         const params = new URLSearchParams(window.location.search);
         const base_url = new URL(base_api_url);
-        const api_url = new URL(endpoint, base_url);
+        const api_url = new URL(endpoint, base_url,);
         api_url.search = params;
-
         const response = await fetch(api_url.toString())
-
         const data = await response.json();
         const status = response.status;
 
@@ -47,11 +45,9 @@ const get_item = async (param) => {
 const get_item_by_id = async (endpoint, id) => {
     try {
         const response = await fetch(base_api_url + endpoint + "/" + id)
-
         const data = await response.json();
         const status = response.status;
-
-        return { item: data.item, status: status };
+        return { item: data, status: status };
     }
     catch (error) {
         return { error: error.message, status: 500 };

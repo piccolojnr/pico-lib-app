@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { login_user } from '../utils/auth';
+import { Helmet } from 'react-helmet';
 
 function Login() {
     const { setAuthToken, setUser } = useContext(AuthContext)
@@ -44,11 +45,11 @@ function Login() {
                 }
             }
             else {
-                setError(response.error.message);
+                setError(response.data);
             }
 
         } catch (error) {
-            setError(error.message);
+            setError(error);
         } finally {
             setLoading(false);
         }
@@ -59,6 +60,11 @@ function Login() {
 
     return (
         <div className=" ">
+            <Helmet>
+                <title>
+                    Login | Pico-Library
+                </title>
+            </Helmet>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
                 <Link to="" className="flex items-center mb-6 text-2xl font-semibold  text-gray-600" style={{ fontFamily: "qualy" }}>
                     Pico-Library

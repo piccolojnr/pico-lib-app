@@ -2,7 +2,7 @@ import React from 'react';
 
 const BookDetailSkeleton = () => {
     return (
-        <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="max-w-xl mx-auto animate-pulse bg-white shadow-md rounded-lg overflow-hidden">
             <div className="p-6">
                 <div className="flex items-center mb-6">
                     <div className="w-20 h-20 bg-gray-300 rounded-full mr-4"></div>

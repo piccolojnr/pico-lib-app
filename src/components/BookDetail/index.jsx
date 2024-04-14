@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { get_user_bookmark_books, create_bookmark, delete_bookmark } from '../../utils/api';
 
 const BookDetail = ({ book }) => {
-
+    console.log(book)
     const {
         id,
         title,
@@ -17,6 +17,7 @@ const BookDetail = ({ book }) => {
         image,
         publishers,
         subjects,
+        agents,
         languages,
         bookshelves,
         resources,
@@ -146,6 +147,18 @@ const BookDetail = ({ book }) => {
                         ))}
                     </ul>
                 </div>
+                <CollapsibleSection title="Agents">
+                    <ul className="list-disc pl-5">
+                        {agents.map(agent => (
+                            <li key={agent.id} className='flex flex-row items-center justify-start gap-4'>
+                                <Link to={`/agents/${agent.id}`} className='text-blue-500 hover:text-blue-700 underline'>
+                                    {agent.name}
+                                </Link>
+                                <p className="text-gray-700 pl-4 border-l-2 font-bold border-l-gray-500">{agent.agent_type}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </CollapsibleSection>
                 <CollapsibleSection title="Subjects">
                     <ul className="list-disc pl-5">
                         {subjects.map(subject => (

@@ -31,8 +31,8 @@ function Home() {
                 const [books, authors, shelves, subjects] = await Promise.all([
                     fetchItems('books/popular', { per_page: 4 }),
                     fetchItems('agents/popular', { per_page: 4 }),
-                    fetchItems('bookshelves', { per_page: 10 }),
-                    fetchItems('subjects', { per_page: 10 }),
+                    fetchItems('bookshelves/', { per_page: 10 }),
+                    fetchItems('subjects/', { per_page: 10 }),
                 ]);
 
                 setPopularBooks(books);

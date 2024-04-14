@@ -3,9 +3,11 @@ import { AuthContext } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import { register_user } from '../utils/auth';
+import { Helmet } from 'react-helmet';
 
 function Register() {
-    const { setAuthToken, setUser, base_api_url } = useContext(AuthContext)
+    const { setAuthToken, setUser } = useContext(AuthContext)
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -17,41 +19,24 @@ function Register() {
         // eslint-disable-next-line
     }, [navigate])
 
-    const register = (e) => {
-        e.preventDefault();
-        setError(null);
-        setLoading(true);
-        const { email, first_name, last_name, gender, password, password2 } = e.target.elements;
-        const user = { email: email.value, first_name: first_name.value, last_name: last_name.value, gender: gender.value, password: password.value, password2: password2.value };
+    const register = async (e) => {
+        try {
+            e.preventDefault();
+            setError(null);
+            setLoading(true);
+            const { email, first_name, last_name, gender, password, password2 } = e.target.elements;
+            const user = { email: email.value, first_name: first_name.value, last_name: last_name.value, gender: gender.value, password: password.value, password2: password2.value };
 
-        if (user.password !== user.password2) {
-            setError(() => "Passwords do not much")
-            setLoading(false)
-            return
-        }
-
-        const params = new URLSearchParams(user).toString();
-
-        fetch(base_api_url + "auth/register", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: params
-        })
-            .then(async res => {
-                if (!res.ok) {
-                    const error = await res.json();
-                    throw new Error(error.message);
-                }
-
-                return res.json();
-            })
-            .then(data => {
-                setAuthToken(data.auth);
-                localStorage.setItem('authToken', JSON.stringify(data.auth));
-                const decoded = jwtDecode(data.auth.auth_token);
+            if (user.password !== user.password2) {
+                setError(() => "Passwords do not much")
+                setLoading(false)
+                return
+            }
+            const response = await register_user(user);
+            if (response.status === 200) {
+                setAuthToken(response.data.auth);
+                localStorage.setItem('authToken', JSON.stringify(response.data.auth));
+                const decoded = jwtDecode(response.data.auth.auth_token);
                 const user = {
                     id: decoded.sub.public_id,
                     email: decoded.sub.email,
@@ -62,25 +47,29 @@ function Register() {
                     navigate('/admin');
                 }
                 else {
-                    navigate('/register');
+                    navigate('/profile');
                 }
+            }
+            else {
+                setError(response.data);
+            }
 
-            })
-            .catch((err) => {
-                console.error('Error:', err);
-                setError(err.message);
-                setAuthToken(null);
-                setUser(null);
-                localStorage.removeItem('authToken');
-            }).finally(() => {
-                setLoading(false);
-            })
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
 
 
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
+               <Helmet>
+                <title>
+                    Register | Pico-Library
+                </title>
+            </Helmet>
             <div>
                 <Link to="" className="flex items-center mb-6 text-2xl font-semibold relative  text-gray-600" style={{ fontFamily: "qualy" }}>
                     Pico-Library
@@ -123,7 +112,7 @@ function Register() {
                             disabled={loading}
                             style={{ backgroundColor: loading ? "#ccc" : "#0ea5e9" }}
                             className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" value={"Sign up"} />
-                        {error && <p className="text-red-500 text-sm opacity-60">{error}</p>}
+                        {error && <p className="text-red-500 text-sm opacity-60">{error.message}</p>}
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                             Already have an account? <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</Link>
                         </p>

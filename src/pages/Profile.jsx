@@ -4,6 +4,7 @@ import { get_profile, resend_confirmation_email, update_profile } from "../utils
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import BookmarkedBooks from "../components/bookmarks";
+import { Helmet } from "react-helmet";
 
 function Profile() {
     const { user, authToken, refreshAuthToken } = useContext(AuthContext);
@@ -135,6 +136,11 @@ function Profile() {
             </div> :
             <div>
                 <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+                    <Helmet>
+                        <title>
+                            {profile.first_name} {profile.last_name} | Pico-Library
+                        </title>
+                    </Helmet>
                     {!profile?.user.is_email_confirmed && (
                         <div className={`${confirmEmailSent ? "bg-green-300 text-gray-800" : "bg-yellow-200 text-white-800"}  p-4 mb-4 rounded-t-md`}>
                             {

@@ -1,7 +1,7 @@
 import { base_api_url } from "./constants";
 const get_comments_by_book_id = async (book_id, type, page = 1) => {
     try {
-        const url = new URL(base_api_url + "comments");
+        const url = new URL(base_api_url + "comments/");
         url.searchParams.set("book_id", book_id);
         url.searchParams.set("type", type);
         url.searchParams.set("page", page);
@@ -23,7 +23,7 @@ const get_comments_by_book_id = async (book_id, type, page = 1) => {
 }
 const get_comments_by_user_id = async (user_id, type, page = 1) => {
     try {
-        const url = new URL(base_api_url + "comments");
+        const url = new URL(base_api_url + "comments/");
         url.searchParams.set("user_id", user_id);
         url.searchParams.set("type", type);
         url.searchParams.set("page", page);
@@ -45,7 +45,7 @@ const get_comments_by_user_id = async (user_id, type, page = 1) => {
 }
 const get_comments_by_parent_id = async (parent_id, type, page = 1) => {
     try {
-        const url = new URL(base_api_url + "comments");
+        const url = new URL(base_api_url + "comments/");
         url.searchParams.set("parent_id", parent_id);
         url.searchParams.set("type", type);
         url.searchParams.set("page", page);

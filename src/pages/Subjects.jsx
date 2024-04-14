@@ -41,7 +41,7 @@ function Subjects() {
         const fetchSubjects = async () => {
             try {
                 setLoading(true);
-                const response = await get_items("subjects")
+                const response = await get_items("subjects/")
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }

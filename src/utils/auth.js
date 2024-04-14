@@ -86,6 +86,31 @@ const login_user = async (email, password) => {
             body: url.searchParams.toString()
         });
 
+
+        const data = await response.json();
+        const status = response.status;
+
+
+        return { data: data, status: status };
+    } catch (error) {
+        return { error: error.message, status: 500 };
+    }
+}
+
+const register_user = async (user) => {
+    const params = new URLSearchParams(user).toString();
+    const url = new URL(base_api_url + "auth/register");
+
+    try {
+        const response = await fetch(url.toString(), {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params
+        });
+
         const data = await response.json();
         const status = response.status;
 
@@ -94,6 +119,7 @@ const login_user = async (email, password) => {
         return { error: error.message, status: 500 };
     }
 }
+
 
 const update_profile = async (auth_token, profile_data) => {
     try {
@@ -185,7 +211,7 @@ export {
     resend_confirmation_email,
     refreshToken,
     confirm_email,
-    login_user,
+    login_user, register_user,
     change_password,
     change_password_with_token,
     update_profile,

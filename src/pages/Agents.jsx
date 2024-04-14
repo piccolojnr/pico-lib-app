@@ -45,7 +45,7 @@ function Agents() {
         const fetchAgents = async () => {
             try {
                 setLoading(true);
-                const response = await get_items("agents")
+                const response = await get_items("agents/")
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }

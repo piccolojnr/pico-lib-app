@@ -59,7 +59,7 @@ function Books() {
         const fetchBooks = async () => {
             try {
                 setLoading(true);
-                const response = await get_items("books")
+                const response = await get_items("books/")
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }
