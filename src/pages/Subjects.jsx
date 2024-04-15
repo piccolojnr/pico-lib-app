@@ -45,22 +45,19 @@ function Subjects() {
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }
-                setBreadcrumbs([
+                const newBreadcrumbs = [
                     { name: 'Home', url: '/' },
-                    { name: 'Subjects', url: '/ubjects' },
-                ])
-                response.params.entries().forEach(async (v) => {
-                    if (v && v[0] !== "page") {
-                        let name = v[1]
-                        setBreadcrumbs(prevBreadcrumbs => [
-                            ...prevBreadcrumbs,
-                            {
-                                name: v[0] + ": " + name,
-                                url: `/books?${v[0]}=${v[1]}`
-                            }
-                        ])
+                    { name: 'Subjects', url: '/subjects' },
+                ];
+
+                for (const [key, value] of response.params) {
+                    if (key !== "page" && key !== "order") {
+                        const name = key + ": " + value;
+                        newBreadcrumbs.push({ name, url: `/subjects?${key}=${value}` });
                     }
-                })
+                }
+
+                setBreadcrumbs(newBreadcrumbs)
                 setPagination(response.pagination)
             } catch (error) {
                 console.log(error);

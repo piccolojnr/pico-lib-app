@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import SearchBar from '../components/SearchBar';
 import AuthorCard from "../components/AuthorCard"
 import AuthorCardSkeleton from "../components/AuthorCardSkeleton"
-import { get_items } from '../utils/api';
+import { get_item, get_items } from '../utils/api';
 
 
 function Agents() {
@@ -49,22 +49,19 @@ function Agents() {
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }
-                setBreadcrumbs([
+                const newBreadcrumbs = [
                     { name: 'Home', url: '/' },
                     { name: 'Agents', url: '/agents' },
-                ])
-                response.params.entries().forEach(async (v) => {
-                    if (v && v[0] !== "page") {
-                        let name = v[1]
-                        setBreadcrumbs(prevBreadcrumbs => [
-                            ...prevBreadcrumbs,
-                            {
-                                name: v[0] + ": " + name,
-                                url: `/books?${v[0]}=${v[1]}`
-                            }
-                        ])
+                ];
+
+                for (const [key, value] of response.params) {
+                    if (key !== "page" && key !== "order") {
+                        const name = key + ": " + value;
+                        newBreadcrumbs.push({ name, url: `/agents?${key}=${value}` });
                     }
-                })
+                }
+
+                setBreadcrumbs(newBreadcrumbs)
                 setPagination(response.pagination)
             } catch (error) {
                 console.log(error);

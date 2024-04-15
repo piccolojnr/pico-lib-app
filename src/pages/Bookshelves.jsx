@@ -45,22 +45,19 @@ function Bookshelves() {
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }
-                setBreadcrumbs([
+                const newBreadcrumbs = [
                     { name: 'Home', url: '/' },
                     { name: 'Bookshelves', url: '/bookshelves' },
-                ])
-                response.params.entries().forEach(async (v) => {
-                    if (v && v[0] !== "page") {
-                        let name = v[1]
-                        setBreadcrumbs(prevBreadcrumbs => [
-                            ...prevBreadcrumbs,
-                            {
-                                name: v[0] + ": " + name,
-                                url: `/books?${v[0]}=${v[1]}`
-                            }
-                        ])
+                ];
+
+                for (const [key, value] of response.params) {
+                    if (key !== "page" && key !== "order") {
+                        const name = key + ": " + value;
+                        newBreadcrumbs.push({ name, url: `/bookshelves?${key}=${value}` });
                     }
-                })
+                }
+
+                setBreadcrumbs(newBreadcrumbs)
                 setPagination(response.pagination)
             } catch (error) {
                 console.log(error);
