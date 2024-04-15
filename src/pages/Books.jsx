@@ -70,6 +70,7 @@ function Books() {
     })
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
+    const [response, setResponse] = useState(null)
 
 
     const handleSortChange = (e) => {
@@ -126,6 +127,7 @@ function Books() {
             try {
                 setLoading(true);
                 const response = await get_items("books/")
+                setResponse(response)
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }
@@ -211,6 +213,12 @@ function Books() {
                     }
                 </div>
             </div >
+            {
+                response &&
+                <pre>
+                    {JSON.stringify(response, null, 2)}
+                </pre>
+            }
         </>
     )
 }
