@@ -70,7 +70,6 @@ function Books() {
     })
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
-    const [response, setResponse] = useState(null)
 
 
     const handleSortChange = (e) => {
@@ -108,65 +107,46 @@ function Books() {
     }
 
     useEffect(() => {
-        const get_item_name = async (param) => {
-            const response = await get_item(param)
-            if (response.status === 200) {
-                const name = response.item.name
-                setBreadcrumbs(prevBreadcrumbs => {
-                    const newBreadcrumbs = [...prevBreadcrumbs]
-                    const index = newBreadcrumbs.findIndex(breadcrumb => breadcrumb.url === `/books?${param[0]}=${param[1]}`)
-                    if (index === -1) {
-                        return prevBreadcrumbs
-                    }
-                    newBreadcrumbs[index].name = param[0] + ": " + name
-                    return newBreadcrumbs
-                })
-            }
-        }
         const fetchBooks = async () => {
             try {
                 setLoading(true);
-                const response = await get_items("books/")
+                const response = await get_items("books/");
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }
-                setBreadcrumbs([
+
+                const newBreadcrumbs = [
                     { name: 'Home', url: '/' },
                     { name: 'Books', url: '/books' },
-                ])
-                response.params.entries().forEach(async (v) => {
-                    if (v && v[0] !== "page") {
-                        let name = v[1]
-                        if (v[0] === "sort") {
-                            setSort(sort_orders.findIndex(x => x.value === v[1]))
-                            return
-                        }
-                        if (v[0] === "order") {
-                            return
-                        }
-                        if (v[0] !== "query" && parseInt(v[1])) {
-                            get_item_name(v)
-                        }
-                        setBreadcrumbs(prevBreadcrumbs => [
-                            ...prevBreadcrumbs,
-                            {
-                                name: v[0] + ": " + name,
-                                url: `/books?${v[0]}=${v[1]}`
+                ];
+
+                for (const [key, value] of response.params) {
+                    if (key === "sort") {
+                        setSort(sort_orders.findIndex(x => x.value === value));
+                    } else if (key !== "page" && key !== "order") {
+                        const name = key + ": " + value;
+                        newBreadcrumbs.push({ name, url: `/books?${key}=${value}` });
+
+                        if (parseInt(value)) {
+                            const itemResponse = await get_item([key, value]);
+                            if (itemResponse.status === 200) {
+                                newBreadcrumbs[newBreadcrumbs.length - 1].name = `${key}: ${itemResponse.item.name}`;
                             }
-                        ])
+                        }
                     }
-                })
-                setPagination(response.pagination)
-                setResponse(response)
+                }
+
+                setBreadcrumbs(newBreadcrumbs);
+                setPagination(response.pagination);
             } catch (error) {
-                console.log(error);
+                console.error('Error fetching books:', error);
             } finally {
                 setLoading(false);
             }
-        }
+        };
+
         fetchBooks();
-        // eslint-disable-next-line
-    }, [navigate])
+    }, [navigate]);
 
     return (
         <>
@@ -213,12 +193,7 @@ function Books() {
                     }
                 </div>
             </div >
-            {
-                response &&
-                <pre>
-                    {JSON.stringify(response, null, 2)}
-                </pre>
-            }
+
         </>
     )
 }
