@@ -127,7 +127,6 @@ function Books() {
             try {
                 setLoading(true);
                 const response = await get_items("books/")
-                setResponse(response)
                 if (response.status !== 200) {
                     throw new Error(response.error);
                 }
@@ -158,6 +157,7 @@ function Books() {
                     }
                 })
                 setPagination(response.pagination)
+                setResponse(response)
             } catch (error) {
                 console.log(error);
             } finally {
