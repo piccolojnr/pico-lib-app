@@ -51,7 +51,6 @@ function ChangePassword() {
                     response = await change_password(refreshedToken.auth.auth_token, oldPassword, newPassword)
                 }
             }
-            console.log(response)
 
             if (response.status === 200) {
                 setSuccess(true);

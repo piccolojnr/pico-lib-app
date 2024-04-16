@@ -7,7 +7,6 @@ function SelectRating({ setRating, rating: r }) {
         const selectedRating = parseInt(e.target.value);
         setLocalRating(selectedRating);
         setRating(selectedRating);
-        console.log(selectedRating);
     };
 
     return (

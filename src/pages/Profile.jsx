@@ -104,7 +104,6 @@ function Profile() {
                 setShowEdit(false);
             }
             else {
-                console.log(response);
                 throw new Error('Failed to update profile');
             }
         }

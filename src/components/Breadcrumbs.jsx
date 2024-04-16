@@ -2,7 +2,6 @@ import React from 'react'
 
 function Breadcrumbs({ breadcrumbs }) {
     const handleclick = (url) => {
-        console.log(url)
         window.location.href = url;
     }
     return (

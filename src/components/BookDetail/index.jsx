@@ -6,7 +6,6 @@ import { AuthContext } from '../../context/AuthContext';
 import { get_user_bookmark_books, create_bookmark, delete_bookmark } from '../../utils/api';
 
 const BookDetail = ({ book }) => {
-    console.log(book)
     const {
         id,
         title,

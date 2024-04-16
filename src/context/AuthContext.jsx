@@ -35,7 +35,6 @@ const AuthProvider = ({ children }) => {
             // If no token found, set user and token to null
             setAuthToken(null);
             setUser(null);
-            console.log('No token found');
             return;
         }
         // eslint-disable-next-line

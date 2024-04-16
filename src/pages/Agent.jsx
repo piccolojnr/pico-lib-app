@@ -18,7 +18,6 @@ function Agent() {
                     setAgent(response.item)
                 else {
                     setAgent(null)
-                    console.log(response)
                 }
 
             } catch (error) {

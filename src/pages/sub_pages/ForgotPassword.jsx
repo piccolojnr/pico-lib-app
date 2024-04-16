@@ -15,7 +15,6 @@ function ForgotPassword() {
 
         try {
             const response = await send_forgot_password_email(email);
-            console.log(response);
             if (response.status === 200) {
                 setSuccess(true);
             }

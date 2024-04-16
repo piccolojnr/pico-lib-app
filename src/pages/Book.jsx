@@ -24,7 +24,6 @@ function Book() {
                     setBook(response.item.item)
                 else {
                     setBook(null)
-                    console.log(response)
                 }
 
             } catch (error) {
