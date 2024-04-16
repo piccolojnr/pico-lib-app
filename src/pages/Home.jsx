@@ -133,7 +133,7 @@ function Home() {
                                         ))
                                     :
                                     bookshelves.map(bookshelf => (
-                                        <Link key={bookshelf.id} to={`/bookshelves/${bookshelf.id}`} className="block max-w-sm p-6  border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                        <Link key={bookshelf.id} to={`/books?bookshelf=${bookshelf.id}`} className="block max-w-sm p-6  border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                             <h5 className="mb-2 tracking-tight text-gray-900 dark:text-white">{bookshelf.name}</h5>
                                         </Link>
 
@@ -155,7 +155,7 @@ function Home() {
                                         ))
                                     :
                                     subjects.map(subject => (
-                                        <Link key={subject.id} to={`/subjects/${subject.id}`} className="block max-w-sm p-6  border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                        <Link key={subject.id} to={`/books?subject=${subject.id}`} className="block max-w-sm p-6  border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                             <h5 className="mb-2 tracking-tight text-gray-900 dark:text-white">{subject.name}</h5>
                                         </Link>
 
